@@ -1439,8 +1439,8 @@ angular.module('ngMockE2E', ['ng']).config(function($provide) {
  * on the `ngMockE2E` and your application modules and defines the fake backend:
  *
  * <pre>
- *   myAppDev = angular.module('myAppDev', ['myApp', 'ngMockE2E']);
- *   myAppDev.run(function($httpBackend) {
+ *   shopCartAppDev = angular.module('shopCartAppDev', ['shopCartApp', 'ngMockE2E']);
+ *   shopCartAppDev.run(function($httpBackend) {
  *     phones = [{name: 'phone1'}, {name: 'phone2'}];
  *
  *     // returns the current list of phones
@@ -1699,16 +1699,16 @@ window.jasmine && (function(window) {
    * Example of what a typical jasmine tests looks like with the inject method.
    * <pre>
    *
-   *   angular.module('myApplicationModule', [])
+   *   angular.module('shopCartApplicationModule', [])
    *       .value('mode', 'app')
    *       .value('version', 'v1.0.1');
    *
    *
-   *   describe('MyApp', function() {
+   *   describe('shopCartApp', function() {
    *
    *     // You need to load modules that you want to test,
    *     // it loads only the "ng" module by default.
-   *     beforeEach(module('myApplicationModule'));
+   *     beforeEach(module('shopCartApplicationModule'));
    *
    *
    *     // inject() is used to inject arguments of all given functions

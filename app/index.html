@@ -1,24 +1,103 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="shopCartApp">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
+  <title>ShopCart App</title>
   <link rel="stylesheet" href="css/app.css"/>
+
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<body  ng-controller="ProductCtrl">
 
-  <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+<div class="container">
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span7">
+
+                <div ng-repeat="productPerCategory in productsToFilter() | filter:filterCategories" class="container-fluid category" >
+                    <h3>{{productPerCategory.category}}</h3>
+                    <div ng-repeat="product in products | filter:{category: productPerCategory.category}" class="row-fluid product" >
+                        <div class="span9">
+                            <a name="{{product.name | anchor}}"></a>
+                            <strong>{{product.name}}</strong><br/>
+                            {{product.description}}
+                            ${{product.price * 1| money}}
+                        </div>
+                        <div class="span3">
+                            <label class="span11">
+                                Quantity:
+                            <input type="number" ng-model="product.quantity" min="0" class="span6" />
+                            </label>
+                            <a href="#/" ng-click="removeFromCart(product)" ng-show="product.quantity" >
+                                <i class="span1 icon-remove icon-large" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="well sidebar-nav sidebar-nav-fixed">
+                    <h3>Shopping Cart <i class="icon-shopping-cart icon-2x"></i></h3>
+                    <div ng-show="isCartEmpty()">Your cart is empty.</div>
+
+                    <div ng-hide="isCartEmpty()">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{itemQuantityTotal()}}</td>
+                                <td></td>
+                                <td>${{itemPriceTotal()}}</td>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr ng-repeat="product in products | filter:hasQuantity">
+                                <td><a href="#{{product.name | anchor}}">{{product.name}}</a></td>
+                                <td>{{product.quantity}}</td>
+                                <td>${{product.price * 1 | money}}</td>
+                                <td>${{product.price * product.quantity | money}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <a class="btn btn-info" href="#/checkout">Checkout</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
   -->
+
+  <!--<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>-->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="lib/tabletop.js"></script>
+
   <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
+  <script src="lib/util.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
