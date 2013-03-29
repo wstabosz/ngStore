@@ -1,9 +1,70 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<div class="container">
+    <div class="container-fluid">
+        <div class="row-fluid">
 
-</body>
-</html>
+            <div class="span7">
+
+                <div ng-repeat="productPerCategory in productsToFilter() | filter:filterCategories" class="container-fluid category" >
+                    <h3>{{productPerCategory.category}}</h3>
+                    <div ng-repeat="product in products | filter:{category: productPerCategory.category}" class="row-fluid product" >
+                        <div id="{{product.name | anchor}}" class="span9">
+                            <strong>{{product.name}}</strong><br/>
+                            {{product.description}}
+                            ${{product.price * 1| money}}
+                        </div>
+                        <div class="span3">
+                            <label class="span11">
+                                Quantity:
+                                <input type="number" ng-model="product.quantity" min="0" class="span6" />
+                            </label>
+                            <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="well sidebar-nav sidebar-nav-fixed">
+                    <h3>Shopping Cart <i class="icon-shopping-cart icon-2x"></i></h3>
+                    <div ng-show="isCartEmpty()">Your cart is empty.</div>
+
+                    <div ng-hide="isCartEmpty()">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{itemQuantityTotal()}}</td>
+                                <td></td>
+                                <td>${{itemPriceTotal()}}</td>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr ng-repeat="product in products | filter:hasQuantity">
+                                <td><a href="#/products?ID={{product.name | anchor}}">{{product.name}}</a></td>
+                                <td>{{product.quantity}}</td>
+                                <td>${{product.price * 1 | money}}</td>
+                                <td>${{product.price * product.quantity | money}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <a class="btn btn-info" >Checkout</a>
+                        <a ng-click="emptyCart()" class="btn btn-danger pull-right" >Empty Cart</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,3 +1,7 @@
+.cursor-pointer {
+    cursor: pointer;
+};
+
 .cartItem li, .cartItem ul{
     display: inline;
     margin: 0;

@@ -1,10 +1,10 @@
 'use strict';
 
 /* Controllers */
-var x = {};
 
-function ProductCtrl($scope, $routeParams, Product, Cart) {
-    x = $scope.products = Product.query();
+function ProductCtrl($scope, $routeParams, $rootScope, Product, Cart) {
+
+    $scope.products =  $rootScope.products;
 
     var indexedCategories = [];
 
@@ -23,6 +23,12 @@ function ProductCtrl($scope, $routeParams, Product, Cart) {
 
     $scope.removeFromCart = function(product) {
         product.quantity = null;
+    };
+
+    $scope.emptyCart = function() {
+        _.each($scope.products, function(e,k,l) {
+            e.quantity = null;
+        });
     };
 
     $scope.hasQuantity = function(product) {
@@ -49,7 +55,7 @@ function ProductCtrl($scope, $routeParams, Product, Cart) {
 
 }
 
-ProductCtrl.$inject = ['$scope', '$routeParams', 'Product'];
+ProductCtrl.$inject = ['$scope', '$routeParams', '$rootScope', 'Product', '$anchorScroll', '$location'];
 
 //////////////////////////////////////////////////////////////////////
 

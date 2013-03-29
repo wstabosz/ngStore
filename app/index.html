@@ -10,82 +10,9 @@
   <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
 
 </head>
-<body  ng-controller="ProductCtrl">
+<body>
 
-
-<div class="container">
-    <div class="container-fluid">
-        <div class="row-fluid">
-
-            <div class="span7">
-
-                <div ng-repeat="productPerCategory in productsToFilter() | filter:filterCategories" class="container-fluid category" >
-                    <h3>{{productPerCategory.category}}</h3>
-                    <div ng-repeat="product in products | filter:{category: productPerCategory.category}" class="row-fluid product" >
-                        <div class="span9">
-                            <a name="{{product.name | anchor}}"></a>
-                            <strong>{{product.name}}</strong><br/>
-                            {{product.description}}
-                            ${{product.price * 1| money}}
-                        </div>
-                        <div class="span3">
-                            <label class="span11">
-                                Quantity:
-                            <input type="number" ng-model="product.quantity" min="0" class="span6" />
-                            </label>
-                            <a href="#/" ng-click="removeFromCart(product)" ng-show="product.quantity" >
-                                <i class="span1 icon-remove icon-large" ></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="span4">
-                <div class="well sidebar-nav sidebar-nav-fixed">
-                    <h3>Shopping Cart <i class="icon-shopping-cart icon-2x"></i></h3>
-                    <div ng-show="isCartEmpty()">Your cart is empty.</div>
-
-                    <div ng-hide="isCartEmpty()">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <td>Total</td>
-                                <td>{{itemQuantityTotal()}}</td>
-                                <td></td>
-                                <td>${{itemPriceTotal()}}</td>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <tr ng-repeat="product in products | filter:hasQuantity">
-                                <td><a href="#{{product.name | anchor}}">{{product.name}}</a></td>
-                                <td>{{product.quantity}}</td>
-                                <td>${{product.price * 1 | money}}</td>
-                                <td>${{product.price * product.quantity | money}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <a class="btn btn-info" href="#/checkout">Checkout</a>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
+<div ng-view></div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
