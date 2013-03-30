@@ -63,8 +63,9 @@ function CartCtrl($scope, $rootScope) {
 
     $scope.items = [];
 
-    $scope.addItem()
+    $scope.addItem(product);
 
 }
 
 CartCtrl.$inject = ['$scope','$rootScope'];
+

@@ -46,23 +46,31 @@
     margin-left: 290px;
 }
 
+
 .sidebar-nav-fixed {
     position:fixed;
     top:20px;
-    width:21.97%;
+    width: 21.97%;
+}
+
+.sidebar-nav-fixed-skinny {
+    width: 11.97%;
 }
 
 @media (max-width: 767px) {
     .sidebar-nav-fixed {
         width:auto;
     }
+
 }
 
 @media (max-width: 979px) {
     .sidebar-nav-fixed {
+        margin-top: 20px;
         position:static;
         width: auto;
     }
+
 }
 
 tfoot tr td {

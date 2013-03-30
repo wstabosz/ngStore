@@ -1,83 +1,30 @@
-<div class="container">
-    <div class="container-fluid">
+<div ng-repeat="category in categories" class="container-fluid category" id="{{category | anchor}}">
+    <h3>{{category}}</h3>
+    <div ng-repeat="product in products | filter:{category: category}" class="row-fluid product" >
+
+        <div class="span12">
+            <h4>{{product.name}}</h4>
+        </div>
+
         <div class="row-fluid">
 
-            <div class="span7">
-
-                <div ng-repeat="productPerCategory in productsToFilter() | filter:filterCategories" class="container-fluid category" >
-                    <h3>{{productPerCategory.category}}</h3>
-                    <div ng-repeat="product in products | filter:{category: productPerCategory.category}" class="row-fluid product" >
-
-                        <div class="span12">
-                            <h4>{{product.name}}</h4>
-                        </div>
-
-                        <div class="row-fluid">
-
-                            <div id="{{product.name | anchor}}" class="span3">
-                                <img src="http://lorempixel.com/400/200/?i={{product.productID}}" alt="Picture of {{product.name}}" class="img-polaroid pull-left" /><br/>
-                                <div class="pull-left">${{product.price * 1| money}}</div>
-                            </div>
-
-                            <div class="span7">
-                                {{randomSentence(product.name)}}
-                            </div>
-
-                            <div class="span2" style="padding-left: .5em">
-                                <label class="span11 " >
-                                    <b>Quantity:</b><br>
-                                    <input type="number" ng-model="product.quantity" min="0" class="span10" />
-                                </label>
-                                <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
-                                <br>
-                                <span ng-show="product.points" ><b>Points:</b> {{product.points}}</span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
+            <div id="{{product.name | anchor}}" class="span3">
+                <img src="{{product.photos[0]}}" alt="Picture of {{product.name}}" class="img-polaroid pull-left" /><br/>
+                <div class="pull-left">${{product.price * 1| money}}</div>
             </div>
 
-            <div class="span4">
-                <div class="well sidebar-nav sidebar-nav-fixed">
-                    <h3>Shopping Cart <i class="icon-shopping-cart icon-2x"></i></h3>
-                    <div ng-show="isCartEmpty()">Your cart is empty.</div>
+            <div class="span7">
+                {{product.description}}
+            </div>
 
-                    <div ng-hide="isCartEmpty()">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <td>Total</td>
-                                <td>{{itemQuantityTotal()}}</td>
-                                <td></td>
-                                <td>${{itemPriceTotal()}}</td>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <tr ng-repeat="product in products | filter:hasQuantity">
-                                <td><a href="/#{{product.name | anchor}}">{{product.name}}</a></td>
-                                <td>{{product.quantity}}</td>
-                                <td>${{product.price * 1 | money}}</td>
-                                <td>${{product.price * product.quantity | money}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <a class="btn btn-info" >Checkout</a>
-                        <a ng-click="emptyCart()" class="btn btn-danger pull-right" >Empty Cart</a>
-                    </div>
-
-                </div>
+            <div class="span2" style="padding-left: .5em">
+                <label class="span11 " >
+                    <b>Quantity:</b><br>
+                    <input type="number" ng-model="product.quantity" min="0" class="span10" />
+                </label>
+                <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
+                <br>
+                <span ng-show="product.points" ><b>Points:</b> {{product.points}}</span>
             </div>
 
         </div>
