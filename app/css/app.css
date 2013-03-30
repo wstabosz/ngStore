@@ -26,6 +26,10 @@
     border-bottom: 1px solid #ddd;
 }
 
+.product img {
+    width: 100px;
+    height: 100px;
+}
 .add-to-cart {
     margin-left: 1em;
 }

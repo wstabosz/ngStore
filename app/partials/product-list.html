@@ -7,18 +7,34 @@
                 <div ng-repeat="productPerCategory in productsToFilter() | filter:filterCategories" class="container-fluid category" >
                     <h3>{{productPerCategory.category}}</h3>
                     <div ng-repeat="product in products | filter:{category: productPerCategory.category}" class="row-fluid product" >
-                        <div id="{{product.name | anchor}}" class="span9">
-                            <strong>{{product.name}}</strong><br/>
-                            {{product.description}}
-                            ${{product.price * 1| money}}
+
+                        <div class="span12">
+                            <h4>{{product.name}}</h4>
                         </div>
-                        <div class="span3">
-                            <label class="span11">
-                                Quantity:
-                                <input type="number" ng-model="product.quantity" min="0" class="span6" />
-                            </label>
-                            <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
+
+                        <div class="row-fluid">
+
+                            <div id="{{product.name | anchor}}" class="span3">
+                                <img src="http://lorempixel.com/400/200/?i={{product.productID}}" alt="Picture of {{product.name}}" class="img-polaroid pull-left" /><br/>
+                                <div class="pull-left">${{product.price * 1| money}}</div>
+                            </div>
+
+                            <div class="span7">
+                                {{randomSentence(product.name)}}
+                            </div>
+
+                            <div class="span2" style="padding-left: .5em">
+                                <label class="span11 " >
+                                    <b>Quantity:</b><br>
+                                    <input type="number" ng-model="product.quantity" min="0" class="span10" />
+                                </label>
+                                <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
+                                <br>
+                                <span ng-show="product.points" ><b>Points:</b> {{product.points}}</span>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
 
@@ -49,7 +65,7 @@
                             </tfoot>
                             <tbody>
                             <tr ng-repeat="product in products | filter:hasQuantity">
-                                <td><a href="#/products?ID={{product.name | anchor}}">{{product.name}}</a></td>
+                                <td><a href="/#{{product.name | anchor}}">{{product.name}}</a></td>
                                 <td>{{product.quantity}}</td>
                                 <td>${{product.price * 1 | money}}</td>
                                 <td>${{product.price * product.quantity | money}}</td>

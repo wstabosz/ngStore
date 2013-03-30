@@ -55,18 +55,16 @@ function ProductCtrl($scope, $routeParams, $rootScope, Product, Cart) {
 
 }
 
-ProductCtrl.$inject = ['$scope', '$routeParams', '$rootScope', 'Product', '$anchorScroll', '$location'];
+ProductCtrl.$inject = ['$scope', '$routeParams', '$rootScope', 'Product', '$anchorScroll'];
 
 //////////////////////////////////////////////////////////////////////
 
-//function ShoppingCartCtrl($scope) {
-//
-//    $scope.items = [];
-//
-//    $scope.isCartEmpty = function() {
-//        return ($scope.items.length == 0);
-//    }
-//
-//}
-//
-//ShoppingCartCtrl.$inject = ['$scope'];
+function CartCtrl($scope, $rootScope) {
+
+    $scope.items = [];
+
+    $scope.addItem()
+
+}
+
+CartCtrl.$inject = ['$scope','$rootScope'];
