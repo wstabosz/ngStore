@@ -149,3 +149,6 @@ fetch the changes and merge them into your project with git.
 ## Contact
 
 For more information on AngularJS please check out http://angularjs.org/
+ngStore
+
+A single page web store implemented with the AngularJS framework.
