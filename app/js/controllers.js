@@ -5,7 +5,7 @@ var s = {};
 /* Controllers */
 
 function ProductCtrl($scope, $routeParams, Product, Cart) {
-s = $scope;
+
     $scope.products =  Product.products();
     $scope.categories = Product.categories;
 
@@ -21,17 +21,19 @@ s = $scope;
 ProductCtrl.$inject = ['$scope', '$routeParams', 'Product', 'Cart'];
 
 //////////////////////////////////////////////////////////////////////
-
-function CartCtrl($scope, Cart) {
+function CartCtrl($scope, Product, Cart) {
 
     var itemsPerPage = 5;
 
-    $scope.itemCount = 0;
+    $scope.itemCount = Cart.itemCount;
     $scope.lastItemCount = 0;
 
     $scope.pageCount = 0;
     $scope.currentPage = 0;
-    $scope.maxSize = 5;
+
+    $scope.itemCount = Cart.itemCount;
+    $scope.products =  Product.products();
+    $scope.pagedCartItems = [];
 
     var pageArray = function(array, pageNumber, itemsPerPage) {
 
@@ -46,11 +48,16 @@ function CartCtrl($scope, Cart) {
         start = (start < 0) ? 0 : start;
 
         result = array.slice(start,end);
-        console.log('start: ' + start + ' end: ' + end);
         return result;
     };
 
-    $scope.getCartItems = function(currentPage) {
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.$watch('products', function(oldValue,newValue) {
+        // this watches for changes in products (specifically the quantity)
+        // and updates the list of items in the cart
 
         var allCartItems = Cart.getCartItems();
 
@@ -63,15 +70,15 @@ function CartCtrl($scope, Cart) {
             $scope.setPage($scope.pageCount);
         }
 
-        var pagedCartItems = pageArray(allCartItems,currentPage, itemsPerPage);
+        $scope.pagedCartItems = pageArray(allCartItems,1, itemsPerPage);
 
-        return pagedCartItems;
-    };
-
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
+    }, true);
 
 }
 
-CartCtrl.$inject = ['$scope', 'Cart'];
+function CartItemsCtrl($scope, Cart) {
+
+
+}
+
+//CartCtrl.$inject = ['$scope', 'Cart'];

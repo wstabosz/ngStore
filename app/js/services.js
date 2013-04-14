@@ -102,6 +102,8 @@ services.factory('Cart', function(Product, $q) {
     var service = {};
     var products = Product.products();
 
+    service.itemCount = 0;
+
 //    var categoriesDeferred = $q.defer();
 //    service.categories = categoriesDeferred.promise;
 
@@ -115,7 +117,9 @@ services.factory('Cart', function(Product, $q) {
     };
 
     service.getCartItems = function() {
-        return _.filter(products, function(product) { return product.quantity > 0; });
+        var result = _.filter(products, function(product) { return product.quantity > 0; });
+        service.itemCount = result.length;
+        return result;
     };
 
     service.itemQuantityTotal = function() {
