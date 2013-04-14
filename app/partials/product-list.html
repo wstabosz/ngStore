@@ -1,6 +1,6 @@
-<div ng-repeat="category in categories" class="container-fluid category" id="{{category | anchor}}">
-    <h3>{{category}}</h3>
-    <div ng-repeat="product in products | filter:{category: category}" class="row-fluid product" >
+<div ng-repeat="category in categories" class="container-fluid category zebra{{$index % 2}}" id="{{category.key}}">
+    <h3>{{category.name}}</h3>
+    <div ng-repeat="product in products | filter:{category: category.name}" class="row-fluid product" id="{{product.name | anchor}}"  >
 
         <div class="span12">
             <h4>{{product.name}}</h4>
@@ -8,7 +8,7 @@
 
         <div class="row-fluid">
 
-            <div id="{{product.name | anchor}}" class="span3">
+            <div class="span3">
                 <img src="{{product.photos[0]}}" alt="Picture of {{product.name}}" class="img-polaroid pull-left" /><br/>
                 <div class="pull-left">${{product.price * 1| money}}</div>
             </div>

@@ -1,6 +1,14 @@
+.zebra0 {
+    background-color: #eee;
+}
+
+.zebra1 {
+    background-color: #fff;
+}
+
 .cursor-pointer {
     cursor: pointer;
-};
+}
 
 .cartItem li, .cartItem ul{
     display: inline;
