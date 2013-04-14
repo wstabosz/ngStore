@@ -97,12 +97,26 @@ services.factory('Product', function($resource, PlaceHolder, $q) {
     return service;
 });
 
-services.factory('Cart', function(Product) {
+services.factory('Cart', function(Product, $q) {
 
     var service = {};
     var products = Product.products();
 
-    service.Items = {};
+//    var categoriesDeferred = $q.defer();
+//    service.categories = categoriesDeferred.promise;
+
+    service.getItems = function() {
+        var deferred = $q.defer();
+
+        var items = _.filter(products, function(product) { return product.quantity > 0; });
+        deferred.resolve(items);
+
+        return deferred.promise;
+    };
+
+    service.getCartItems = function() {
+        return _.filter(products, function(product) { return product.quantity > 0; });
+    };
 
     service.itemQuantityTotal = function() {
         var result = _.reduce(products, function(memo, product) { return memo + (product.quantity || 0);},0);

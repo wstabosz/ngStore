@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('shopCartApp', ['shopCartApp.filters', 'shopCartApp.services', 'shopCartApp.directives']);
+var app = angular.module('shopCartApp', ['ui.bootstrap','shopCartApp.filters', 'shopCartApp.services', 'shopCartApp.directives']);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/products', {templateUrl: 'partials/main.html', controller: ProductCtrl});
