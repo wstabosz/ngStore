@@ -17,6 +17,32 @@ directives.directive('scrollSpy', function(){
     }
 });
 
+
+directives.directive('fixedHeaderTable', function($timeout) {
+    return function(scope, element, attrs) {
+        //this.$on('$viewContentLoaded', function() {
+        $timeout(function() {
+            console.log('fixedHeaderTable');
+            element.fixedHeaderTable({height: 300, footer: true});
+        }, 1000);
+        //});
+    };
+});
+
+directives.directive('scrollIndex', function() {
+    return function(scope, element, attrs) {
+        element.bind('scroll', function(event) {
+            var count = Math.max(1,attrs.scrollIndex);
+            var top = Math.max(1, element[0].scrollTop);
+            var height = element[0].scrollHeight;
+            var sectionSize = (height / count);
+            var index = Math.floor(top / sectionSize);
+            //console.log('top: ' + top + ' height: ' + height + ' index: ' + index);
+            attrs.action(index);
+        });
+    };
+});
+
 directives.directive('scrollTo', function($location, $window){
     // if a directive is only "restrict: 'A'" and "link:", you can just return the function
     return function(scope, element, attrs) {

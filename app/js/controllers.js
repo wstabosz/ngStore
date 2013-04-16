@@ -25,6 +25,11 @@ function CartCtrl($scope, Product, Cart) {
 
     var itemsPerPage = 5;
 
+    $scope.getHeight = function() {
+        var height = 8 + ($scope.itemCount * 3);
+        return height.toString() + 'em';
+    };
+
     $scope.itemCount = Cart.itemCount;
     $scope.lastItemCount = 0;
 
@@ -34,6 +39,10 @@ function CartCtrl($scope, Product, Cart) {
     $scope.itemCount = Cart.itemCount;
     $scope.products =  Product.products();
     $scope.pagedCartItems = [];
+
+    $scope.scrollMe = function(index) {
+        console.log(index);
+    };
 
     var pageArray = function(array, pageNumber, itemsPerPage) {
 
@@ -70,7 +79,9 @@ function CartCtrl($scope, Product, Cart) {
             $scope.setPage($scope.pageCount);
         }
 
-        $scope.pagedCartItems = pageArray(allCartItems,1, itemsPerPage);
+        $scope.pagedCartItems = allCartItems;
+
+        //$scope.pagedCartItems = pageArray(allCartItems,1, itemsPerPage);
 
     }, true);
 
