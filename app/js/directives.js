@@ -18,12 +18,34 @@ directives.directive('scrollSpy', function(){
 });
 
 
+directives.directive('resizeSpy', function ($window) {
+    return function (scope) {
+        scope.width = $window.innerWidth;
+        scope.height = $window.innerHeight;
+        angular.element($window).bind('resize', function () {
+            scope.$apply(function () {
+                scope.width = $window.innerWidth;
+                scope.height = $window.innerHeight;
+            });
+        });
+    };
+});
+
 directives.directive('fixedHeaderTable', function($timeout) {
     return function(scope, element, attrs) {
         //this.$on('$viewContentLoaded', function() {
         $timeout(function() {
-            console.log('fixedHeaderTable');
-            element.fixedHeaderTable({height: 300, footer: true});
+
+            var innerHeight = window.innerHeight;
+            var height =
+                innerHeight -
+                element.position().top -
+                (element.parents('.well').height() -
+                element.height());
+
+            //element.fixedHeaderTable({height: height, footer: true});
+            element.fixedHeaderTable({footer: true});
+
         }, 1000);
         //});
     };

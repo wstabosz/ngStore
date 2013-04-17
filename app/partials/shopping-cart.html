@@ -1,17 +1,13 @@
 
-<div ng-controller="CartCtrl" class="well sidebar-nav sidebar-nav-fixed">
-    <h3>Shopping Cart <i class="icon-shopping-cart icon-2x"></i></h3>
+<div ng-controller="CartCtrl" resize-spy class="well sidebar-nav sidebar-nav-fixed" >
+    <h3 style="margin-top: 0;">Shopping Cart <i class="icon-shopping-cart icon-large"></i></h3>
     <div ng-show="itemCount == 0">Your cart is empty.</div>
 
     <div ng-show="itemCount > 0">
 
-        <div >
-            <!--<div scroll-index="{{itemCount}}" action="scrollMe" style="width: 1.5em; height: 100%; position: absolute; right: -1em; overflow-y: scroll;">-->
-                <!--<div style="width: 100%; height: {{getHeight()}}">-->
-                    <!--&lt;!&ndash;div to expand scroll bar of parent div&ndash;&gt;-->
-                <!--</div>-->
-            <!--</div>-->
-            <table id="cartTable" fixed-header-table ng-controller="CartItemsCtrl" class="table table-bordered table-striped">
+        <div style="height: {{(height - 200) + 'px'}}; overflow: hidden">
+
+            <table fixed-header-table ng-controller="CartItemsCtrl" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Item</th>
