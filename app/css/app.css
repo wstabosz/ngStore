@@ -1,3 +1,15 @@
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    font-size: 9pt;
+    line-height: 1.25em;
+    height: 500px;
+}
+
+.ngViewport {
+    /*height: 100% !important;*/
+}
+
 .table {
     margin-bottom: 0 !important;
 }

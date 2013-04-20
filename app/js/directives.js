@@ -31,25 +31,19 @@ directives.directive('resizeSpy', function ($window) {
     };
 });
 
-directives.directive('fixedHeaderTable', function($timeout) {
-    return function(scope, element, attrs) {
-        //this.$on('$viewContentLoaded', function() {
-        $timeout(function() {
 
-            var innerHeight = window.innerHeight;
-            var height =
-                innerHeight -
-                element.position().top -
-                (element.parents('.well').height() -
-                element.height());
-
-            //element.fixedHeaderTable({height: height, footer: true});
-            element.fixedHeaderTable({footer: true});
-
-        }, 1000);
-        //});
-    };
-});
+//directives.directive('fixedHeaderTable', function($timeout ) {
+//    return function(scope, element, attrs) {
+//
+//        scope.$watch('height', function(oldValue,newValue) {
+//
+//            var height = scope.height + parseInt(attrs.heightOffset || 0);
+//            element.fixedHeaderTable({height: height , footer: true});
+//
+//        });
+//
+//    };
+//});
 
 directives.directive('scrollIndex', function() {
     return function(scope, element, attrs) {

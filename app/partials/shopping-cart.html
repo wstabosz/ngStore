@@ -5,35 +5,9 @@
 
     <div ng-show="itemCount > 0">
 
-        <div style="height: {{(height - 200) + 'px'}}; overflow: hidden">
+    <div>
 
-            <table fixed-header-table ng-controller="CartItemsCtrl" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <td>Total</td>
-                    <td>{{itemQuantityTotal()}}</td>
-                    <td></td>
-                    <td>${{itemPriceTotal()}}</td>
-                </tr>
-                </tfoot>
-                <tbody>
-                <tr ng-repeat="product in pagedCartItems">
-                    <td><a href="#{{product.name | anchor}}" scroll-to>{{product.name}}</a></td>
-                    <td>{{product.quantity}}</td>
-                    <td>${{product.price * 1 | money}}</td>
-                    <td>${{product.price * product.quantity | money}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="gridStyle" ng-grid="gridOptions"></div>
 
         <div ng-show="pageCount > 100">
             <pagination num-pages="pageCount" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>

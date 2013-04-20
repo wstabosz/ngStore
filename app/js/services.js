@@ -36,7 +36,7 @@ services.factory('Product', function($resource, PlaceHolder, $q) {
 
             v.description = PlaceHolder.randomSentence();
 
-            v.quantity = 1;
+            //v.quantity = 1;
         });
 
         var uniqueCategories = _.unique(_.pluck( data, 'category'));

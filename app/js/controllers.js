@@ -23,67 +23,103 @@ ProductCtrl.$inject = ['$scope', '$routeParams', 'Product', 'Cart'];
 //////////////////////////////////////////////////////////////////////
 function CartCtrl($scope, Product, Cart) {
 
-    var itemsPerPage = 5;
-
-    $scope.getHeight = function() {
-        var height = 8 + ($scope.itemCount * 3);
-        return height.toString() + 'em';
-    };
-
-    $scope.itemCount = Cart.itemCount;
-    $scope.lastItemCount = 0;
-
-    $scope.pageCount = 0;
-    $scope.currentPage = 0;
+    $scope.cartItems = [];
 
     $scope.itemCount = Cart.itemCount;
     $scope.products =  Product.products();
-    $scope.pagedCartItems = [];
 
     $scope.scrollMe = function(index) {
         console.log(index);
     };
 
-    var pageArray = function(array, pageNumber, itemsPerPage) {
+    var getCartItems = function() {
 
-        var result = [];
-        if (!array.length) return result;
+        var items = Cart.getCartItems();
 
-        var end = pageNumber * itemsPerPage;
-        var lastOffset = array.length;
-        end = (end > lastOffset) ? lastOffset  : end;
+        $scope.itemCount = items.length;
 
-        var start = end - itemsPerPage;
-        start = (start < 0) ? 0 : start;
+        if( $scope.itemCount > $scope.lastItemCount ) {
 
-        result = array.slice(start,end);
-        return result;
+        }
+
+        return items;
+
     };
 
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
+    var createGridRows = function() {
+
+        var items = Cart.getCartItems();
+        var rows = _.map(items, function(item) {
+            if (item.quantity > 0)  {
+                return {
+                    name: item.name,
+                    quantity: item.quantity,
+                    price: (item.price * 1).formatMoney(2,'.',''),
+                    total: (item.quantity * item.price).formatMoney(2,'.','')
+                };
+            }
+        });
+
+        $scope.itemCount = rows.length;
+
+        return rows;
+
     };
 
     $scope.$watch('products', function(oldValue,newValue) {
         // this watches for changes in products (specifically the quantity)
         // and updates the list of items in the cart
 
-        var allCartItems = Cart.getCartItems();
-
-        $scope.itemCount = allCartItems.length;
-        $scope.pageCount = Math.ceil($scope.itemCount / itemsPerPage);
-
-        if( $scope.itemCount > $scope.lastItemCount ) {
-            // it the user adds an item to the cart, scroll to the last page
-            $scope.lastItemCount = $scope.itemCount;
-            $scope.setPage($scope.pageCount);
-        }
-
-        $scope.pagedCartItems = allCartItems;
-
-        //$scope.pagedCartItems = pageArray(allCartItems,1, itemsPerPage);
+        $scope.cartItems = createGridRows(); //getCartItems();
 
     }, true);
+
+    $scope.gridOptions = {
+        data: 'cartItems'
+        ,plugins: [new ngGridFlexibleHeightPlugin({minHeight: 20, maxHeight: function() { return $scope.gridMaxHeight;} })]
+        ,enableRowSelection: false
+        ,showFooter: true
+        ,columnDefs: [
+            {
+                field:'name'
+                ,displayName:'Item'
+                ,width: '139px'
+                ,cellTemplate: '<a class="ngCellText" href="#{{row.entity[col.field] | anchor}}" scroll-to>{{row.entity[col.field]}}</a>'
+            },
+            {
+                field:'quantity'
+                , displayName:'Qty'
+                ,width: '32px'
+            },
+            {
+                field:'price'
+                , displayName:'Price'
+                ,width: '48px'
+            },
+            {
+                field:'total'
+                , displayName:'Total'
+                ,width: '54px'
+            }
+        ]
+    };
+
+    $scope.$watch('height', function(oldValue,newValue) {
+            //$scope.cartTableContainerStyle = ($scope.height - 180) + 'px';
+
+        $scope.gridMaxHeight = $scope.height - 180;
+
+        $scope.cartTableContainerStyle =
+        {
+            'max-height': ($scope.height - 180) + 'px'
+            //,overflow: 'hidden'
+        };
+
+
+    });
+
+
+
 
 }
 
