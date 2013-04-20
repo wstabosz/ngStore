@@ -79,6 +79,14 @@ function CartCtrl($scope, Product, Cart) {
         ,plugins: [new ngGridFlexibleHeightPlugin({minHeight: 20, maxHeight: function() { return $scope.gridMaxHeight;} })]
         ,enableRowSelection: false
         ,showFooter: true
+        ,footerRowHeight: 30
+        ,footerTemplate:
+            '<div class="ngHeaderContainer ngFooterPanel" ng-style="headerStyle()" >'
+            + '<div class="ngHeaderCell ngCellText" ng-class="renderedColumns[0].colIndex()">Total</div>'
+            + '<div class="ngHeaderCell ngCellText" ng-class="renderedColumns[1].colIndex()">{{itemQuantityTotal()}}</div>'
+            + '<div class="ngHeaderCell ngCellText" ng-class="renderedColumns[2].colIndex()"></div>'
+            + '<div class="ngHeaderCell ngCellText" ng-class="renderedColumns[3].colIndex()">{{itemPriceTotal()}}</div>'
+            + '</div>'
         ,columnDefs: [
             {
                 field:'name'

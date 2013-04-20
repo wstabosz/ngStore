@@ -7,7 +7,38 @@
 }
 
 .ngViewport {
-    /*height: 100% !important;*/
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+}
+
+.ngFooterPanel {
+    height: 30px;
+}
+
+.ngFooterPanel .ngCellText {
+    font-weight: normal;
+    background-color: #ffa;
+}
+
+.ngFooterPanel div
+{
+    display: inline-block;
+}
+
+.ngFooterPanel .column1 {
+    width: 139px;
+}
+
+.ngFooterPanel .column2 {
+    width: 32px;
+}
+
+.ngFooterPanel .column3 {
+    width: 48px;
+}
+
+.ngFooterPanel .column4 {
+    width: 54px;
 }
 
 .table {
