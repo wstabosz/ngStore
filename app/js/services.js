@@ -12,9 +12,33 @@ services.factory('Data', function(Product) {
     var service = {};
 
     service.Products = Product.resource.query();
+    service.States = Address.resources.states.query();
 
     return service;
+
 });
+
+services.factory('Address', ['$resource',function($resource) {
+    var service = {};
+
+    service.resources = {};
+
+    service.resources.states =
+        $resource('json/states.json', {}, {
+            query: {method: 'GET',params: {},isArray: true}
+        });
+
+    var states = null;
+    service.states = function() {
+        if (states == null) {
+            states = service.resources.states.query();
+        }
+        return states;
+    };
+
+    return service;
+
+}]);
 
 services.factory('Product', function($resource, PlaceHolder, $q) {
 
@@ -36,7 +60,8 @@ services.factory('Product', function($resource, PlaceHolder, $q) {
 
             v.description = PlaceHolder.randomSentence();
 
-            //v.quantity = 1;
+            v.quantity = Math.max(0, Math.floor(Math.random() * 10) - 7);
+
         });
 
         var uniqueCategories = _.unique(_.pluck( data, 'category'));
@@ -83,7 +108,7 @@ services.factory('Product', function($resource, PlaceHolder, $q) {
     };
 
     service.resource =
-        $resource('products/:productID.json', {}, {
+        $resource('json/products/:productID.json', {}, {
             query: {method: 'GET',params: {productID: 'products'},isArray: true}
         });
 

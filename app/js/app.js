@@ -3,8 +3,9 @@
 var app = angular.module('shopCartApp', ['ui.bootstrap','shopCartApp.filters', 'shopCartApp.services', 'shopCartApp.directives','ngGrid']);
 
 app.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/products', {templateUrl: 'partials/main.html', controller: ProductCtrl});
-    //$routeProvider.when('/products/:productID', {templateUrl: 'partials/product-detail.html', controller: MyCtrl2});
+    $routeProvider.when('/products', {templateUrl: 'partials/store-main.html', controller: 'ProductCtrl'});
+    $routeProvider.when('/checkout-review', {templateUrl: 'partials/checkout-review.html', controller: 'CheckoutCtrl'});
+    $routeProvider.when('/checkout-complete', {templateUrl: 'partials/checkout-complete.html', controller: 'CheckoutCtrl'});
     $routeProvider.otherwise({redirectTo: '/products'});
 }]);
 

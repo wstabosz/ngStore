@@ -9,12 +9,8 @@
 
         <div class="gridStyle" ng-grid="gridOptions"></div>
 
-        <div ng-show="pageCount > 100">
-            <pagination num-pages="pageCount" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>
-        </div>
-
         <br>
-        <a class="btn btn-info" >Checkout</a>
+        <a href="#/checkout-review" class="btn btn-info" >Checkout</a>
         <a ng-click="emptyCart()" class="btn btn-danger pull-right" >Empty Cart</a>
     </div>
 

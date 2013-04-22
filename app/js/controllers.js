@@ -4,7 +4,8 @@ var s = {};
 
 /* Controllers */
 
-function ProductCtrl($scope, $routeParams, Product, Cart) {
+app.controller('ProductCtrl', ['$scope', '$routeParams', 'Product', 'Cart',
+    function ProductCtrl($scope, $routeParams, Product, Cart) {
 
     $scope.products =  Product.products();
     $scope.categories = Product.categories;
@@ -16,9 +17,33 @@ function ProductCtrl($scope, $routeParams, Product, Cart) {
     $scope.hasQuantity = Cart.hasQuantity;
     $scope.isCartEmpty = Cart.isCartEmpty;
 
-}
+}]);
 
-ProductCtrl.$inject = ['$scope', '$routeParams', 'Product', 'Cart'];
+//////////////////////////////////////////////////////////////////////
+
+
+app.controller('CheckoutCtrl', ['$scope', '$location', 'Product', 'Cart', 'Address',
+    function CheckoutCtrl($scope, $location, Product, Cart, Address) {
+
+        $scope.products = Product.products();
+        $scope.states = Address.states();
+
+        $scope.itemQuantityTotal = Cart.itemQuantityTotal;
+        $scope.itemPriceTotal = Cart.itemPriceTotal;
+
+        $scope.cartItems = Cart.getItems();
+        $scope.itemCount = Cart.itemCount;
+
+        $scope.isReviewOrder = ($location.path() == '/checkout-review');
+
+//        $scope.cartItems = Cart.getCartItems();
+
+    }
+]);
+
+//    function CheckoutCtrl() {
+//
+//}
 
 //////////////////////////////////////////////////////////////////////
 function CartCtrl($scope, Product, Cart) {

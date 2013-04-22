@@ -1,0 +1,37 @@
+<ng-include src="'partials/checkout-navbar.html'"></ng-include>
+
+<div class="container-fluid">
+
+    <h4>Review your order</h4>
+
+    <div ng-show="itemCount == 0">Your cart is empty.</div>
+
+    <div ng-show="itemCount > 0">
+
+        <div ng-repeat="item in cartItems" class="row-fluid review-product " >
+
+            <div class="row-fluid">
+
+                <div class="span3">
+                    <img src="{{item.photos[0]}}" alt="Picture of {{item.name}}" class="img-polaroid pull-left" /><br/>
+                </div>
+
+                <div class="span3">
+                    <h4>{{item.name}}</h4>
+                    <b>Quantity:</b> {{item.quantity}}<br>
+                    <b>Price:</b> ${{item.price * 1| money}}<br>
+                    <b>Total:</b> ${{item.quantity * item.price | money}}<br>
+                </div>
+
+                <div class="span6">
+                    {{item.description}}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
