@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSONP Demo</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script src="modelValidator.js"></script>
+</head>
+<body>
+
+<textarea id="payload" rows="10" cols="50">
+{
+    "module": "person",
+    "action": "post",
+    "data": { "name": "walter", "birthday": "1982-08-10"}
+}
+</textarea>
+
+<br>
+
+<select id="actionSelect">
+    <option value="get">get</option>
+    <option value="put">put</option>
+    <option value="post">post</option>
+    <option value="delete">delete</option>
+</select>
+
+<button id="goButton">Go</button>
+
+<script>
+
+    var app = app || {};
+    app.data = {};
+
+    app.init = function() {
+        app.initEvents();
+        app.test();
+    };
+
+    app.initEvents = function() {
+
+        app.events = {};
+
+        app.events.goButton_click = function(e) {
+            e.preventDefault();
+            var data = JSON.parse($('#payload').val());
+        };
+
+        $('#goButton').on('click', app.events.goButton_click);
+
+    };
+
+    app.test = function() {
+
+        app.mv = new ModelValidator({
+            models: {
+                person: {
+                    name: { first: '', last: ''},
+                    age: 0,
+                    occupation: ''
+                },
+                place: {
+                    city: '',
+                    state: {_length: 50, _default: 'Delaware'},
+                    zip: {_length: 10},
+                    age: {_default: 11}
+                },
+                thing: {
+                    name: '',
+                    height: 0,
+                    length: 0,
+                    width: 0,
+                    //children: [0,''],  // if an array, then the items are a list of allowed data types
+                    places: [{model:'place'}],
+                    person: {model: 'person'}
+                }
+            },
+            allow: {
+                remove: false,
+                removeBatch: false,
+                update: true,
+                insert: true
+            }
+        });
+
+        var items = [
+            {
+                type: 'thing',
+                name: 'Bob',
+                age: 45,
+                children: ['a',1,[1],{}],
+                person: {
+                    name: { first: 'Walter', last: 'Stabosz' }
+                },
+                places: [
+                    1, 'a',1.3,
+                    {level: 10},
+                    {
+                        type: 'place',
+                        city: 'Newark',
+                        zip: '1234567890abcdefghijk',
+                        district: 'blue'
+                    }
+                ]
+
+            }
+            ,{
+                type: 'person',
+                name: {first: 'George'},
+                age: 45
+            }
+            ,{
+                type: 'place',
+                city: 'Newark',
+                zip: '1234567890abcdefghijk'
+            }
+            ,{
+                type: 'place',
+                city: 'Wilmington',
+                state: 'Delaware',
+                age: 123,
+                color: 'red'
+            }
+        ];
+
+        for (var i=0;i<items.length;i++) {
+
+            var result = app.mv.validateModel(items[i]);
+
+            var model = app.mv.models[items[i].type];
+
+            console.log('model ' + i.toString());
+            console.log(model);
+            console.log('item ' + i.toString());
+            console.log(items[i]);
+            console.log('result ' + i.toString());
+            console.log(result);
+            console.log('--------------------------');
+        }
+
+    };
+
+
+
+
+
+    $(app.init);
+
+</script>
+
+</body>
+</html>

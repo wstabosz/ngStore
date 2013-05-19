@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSONP Demo</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+
+</head>
+<body>
+
+<textarea id="payload" rows="10" cols="50">
+{
+    "module": "person",
+    "action": "post",
+    "data": { "name": "walter", "birthday": "1982-08-10"}
+}
+</textarea>
+
+<br>
+
+<select id="actionSelect">
+    <option value="get">get</option>
+    <option value="put">put</option>
+    <option value="post">post</option>
+    <option value="delete">delete</option>
+</select>
+
+<button id="goButton">Go</button>
+
+<script>
+
+    var app = app || {};
+    app.data = {};
+
+    app.init = function() {
+        app.initEvents();
+        app.test();
+    };
+
+    app.initEvents = function() {
+
+        app.events = {};
+
+        app.events.goButton_click = function(e) {
+            e.preventDefault();
+            var data = JSON.parse($('#payload').val());
+            app.callGoogle(data);
+        };
+
+        $('#goButton').on('click', app.events.goButton_click);
+
+    };
+
+    app.test = function() {
+
+        var items = [
+            {
+                type: 'thing',
+                name: 'Bob',
+                age: 45,
+                children: ['a',1,[1],{}],
+                person: {
+                    name: { first: 'Walter', last: 'Stabosz' }
+                },
+                places: [
+                    1, 'a',1.3,
+                    {level: 10},
+                    {
+                        type: 'place',
+                        city: 'Newark',
+                        zip: '1234567890abcdefghijk',
+                        district: 'blue'
+                    }
+                ]
+
+            }
+//            ,{
+//                type: 'person',
+//                name: {first: 'George'},
+//                age: 45
+//            }
+//            ,{
+//                type: 'place',
+//                city: 'Newark',
+//                zip: '1234567890abcdefghijk'
+//            }
+//            ,{
+//                type: 'place',
+//                city: 'Wilmington',
+//                state: 'Delaware',
+//                age: 123,
+//                color: 'red'
+//            }
+        ];
+
+        for (var i=0;i<items.length;i++) {
+            var result1 = validateModel(items[i]);
+
+            var model = settings.models[items[i].type];
+
+            console.log('model ' + i.toString());
+            console.log(model);
+            console.log('item ' + i.toString());
+            console.log(items[i]);
+            console.log('result ' + i.toString());
+            console.log(result1);
+
+        }
+
+    };
+
+    app.callGoogle = function(data) {
+
+        var url = 'https://script.google.com/macros/s/AKfycbxMBGnrKzwNRE3j68o7FHc-CHl4FFMCMiezCwnBTIpBjXzgV3V4/exec';
+
+        $.ajax({
+            type: data.action,
+            data: data,
+            url: url + '?callback=?',
+            async: true,
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(data) {
+                console.log('success:');
+                console.log(data);
+                app.data.response = data;
+            }
+        });
+
+//        $.getJSON(url + "&prefix=?", function(data) {
+//            console.log('hello');
+//            console.log(data);
+//        });
+
+    //        $.ajax({
+//            url: 'https://script.googleusercontent.com/macros/echo?user_content_key=nH2mbp5FCKTpHn-bnv-kk4vnWpjxjs9ojrOiarR0TBl2_g0qSVvt88ALkt00RMKNH9kAetb1Yt58qv4Ifqp_xE_pvM7SsElcm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnByq2Z0uQeJo-txtAVzrzHc4Y3l26GQTK_eqnrpdudRKDKlsiDdPxzDGheb66YosVA&lib=MPMKyCslI2sut7PD2LaHqA7R_mkKkZgc5',
+//            success: function(data) {
+//
+//            }
+//
+//        });
+
+    };
+
+    var settings = {
+        models: {
+            person: {
+                name: { first: '', last: ''},
+                age: 0,
+                occupation: ''
+            },
+            place: {
+                city: '',
+                state: {_length: 50, _default: 'Delaware'},
+                zip: {_length: 10},
+                age: {_default: 11}
+            },
+            thing: {
+                name: '',
+                height: 0,
+                length: 0,
+                width: 0,
+              //children: [0,''],  // if an array, then the items are a list of allowed data types
+                places: [{model:'place'}],
+                person: {model: 'person'}
+            }
+        },
+        allow: {
+            remove: false,
+            removeBatch: false,
+            update: true,
+            insert: true
+        }
+    };
+
+    function validateModel(item) {
+
+        var type = item.type || '';
+        var model = settings.models[type];
+        var result = null;
+
+        var processArray = function(context) {
+
+            if( isArray(context.modelItem) ) {
+               if (isArray(context.branchItem) ) {
+
+                    var arrayResult = [];
+                    for(var i=0;i< context.branchItem.length;i++) {
+                        // determine if this item's data type is allowed in the array
+                        var isAllowed= false;
+                        var branchItem = context.branchItem[i];
+
+                        var j = 0;
+                        while ((!isAllowed) && (j<context.modelItem.length)) {
+                            var modelItem = context.modelItem[j];
+
+                            if(modelItem.hasOwnProperty('model')) {
+                                var modelType = modelItem.model || true;
+                                var branchType = branchItem.type || false;
+                                // default Types to opposite values so that they fail equality test
+                                if (modelType === branchType) {
+                                    isAllowed = true;
+                                    branchItem = validateModel(branchItem);
+                                }
+                            } else {
+                                isAllowed = isAllowed || isSameType(modelItem,branchItem);
+                            }
+
+                            j++;
+                        }
+
+                        if (isAllowed) {
+                            arrayResult.push(branchItem);
+                        }
+                    }
+                    context.result[context.key] = arrayResult;
+                } else {
+                    context.result[context.key] = [];
+                }
+            }
+
+        };
+
+        var processDefault = function(context) {
+            if(context.modelItem.hasOwnProperty('_default') ) {
+                context.defaultValue = context.modelItem._default;
+                context.isTypeMatch = isSameType(context.modelItem._default,context.branchItem);
+                context.doRecurse = false;
+            } else {
+                context.isTypeMatch = isSameType(context.modelItem,context.branchItem);
+            }
+        }
+
+        var processModel = function(context) {
+
+            if(context.modelItem.hasOwnProperty('model')) {
+                var modelName = context.modelItem.model;
+                if (settings.models.hasOwnProperty(modelName)) {
+                    context.result[context.key] = processBranch(settings.models[modelName], context.branchItem);
+                } else {
+                    context.result[context.key] = null;
+                }
+            }
+
+        }
+
+        var processLength = function(context) {
+            if(context.modelItem.hasOwnProperty('_length') ) {
+
+                // it's a string with a max length
+                if (typeof context.branchItem === 'string') {
+                    context.result[context.key] = context.branchItem.substr(0, context.modelItem._length);
+                }
+
+            }
+        }
+
+        var processBranch = function(model, branch) {
+            if ((!model) || (!branch)) return null;
+
+            var context = {};
+            context.result = {};
+
+            for (var key in model) {
+
+                context.defaultValue = null;
+
+                // check if the key from the item exists in the model
+                if (model.hasOwnProperty(key) ) {
+
+                    context.key = key;
+                    context.modelItem = model[key];
+                    context.branchItem = branch[key] || null;
+                    context.isTypeMatch = false;
+                    context.doRecurse = isObject(context.modelItem);
+
+                    processArray(context);
+                    processDefault(context);
+                    processModel(context);
+                    processLength(context);
+
+                    // check if the value was set in one of the process methods
+                    if (!context.result.hasOwnProperty(key)) {
+
+                        // check if the two values are of the same type
+                        if (context.isTypeMatch) {
+
+                            if (context.doRecurse) {
+                                context.result[key] = processBranch(context.modelItem, context.branchItem);
+                            } else {
+                                context.result[key] = context.branchItem;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                if (!context.result.hasOwnProperty(key)) {
+                    context.result[key] = context.defaultValue;
+                }
+            }
+
+            return context.result;
+        };
+
+        result = processBranch(model,item);
+        if(result) {
+            result._type = type;
+        }
+        return result;
+
+    }
+
+    function isArray(obj) {
+        return (Object.prototype.toString.call(obj) === '[object Array]');
+    }
+
+    function isObject(obj) {
+        return (Object.prototype.toString.call(obj) === '[object Object]');
+    }
+
+    function isSameType(a,b) {
+        return (Object.prototype.toString.call(a) === Object.prototype.toString.call(b));
+    }
+
+    $(app.init);
+
+</script>
+
+</body>
+</html>
