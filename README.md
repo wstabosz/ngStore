@@ -12,7 +12,7 @@ take paper orders. It was time consuming and error prone to pick orders from pap
 [http://wstabosz.github.io/ngStore](http://wstabosz.github.io/ngStore)
 
 The app starts with a shopping cart filled with random items.
-
+ 
 ## Working features
 
 You can:
