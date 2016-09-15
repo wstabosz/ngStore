@@ -1,0 +1,33 @@
+<div ng-repeat="category in categories" class="container-fluid category zebra{{$index % 2}}" id="{{category.key}}">
+    <h3>{{category.name}}</h3>
+    <div ng-repeat="product in products | filter:{category: category.name}" class="row-fluid product" id="{{product.name | anchor}}"  >
+
+        <div class="span12">
+            <h4>{{product.name}}</h4>
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="span3">
+                <img src="{{product.photos[0]}}" alt="Picture of {{product.name}}" class="img-polaroid pull-left" /><br/>
+                <div class="pull-left">${{product.price * 1| money}}</div>
+            </div>
+
+            <div class="span7">
+                {{product.description}}
+            </div>
+
+            <div class="span2" style="padding-left: .5em">
+                <label class="span11 " >
+                    <b>Quantity:</b><br>
+                    <input type="number" ng-model="product.quantity" min="0" class="span10" />
+                </label>
+                <i ng-click="removeFromCart(product)" ng-show="product.quantity" class="span1 icon-remove icon-large cursor-pointer" ></i>
+                <br>
+                <span ng-show="product.points" ><b>Points:</b> {{product.points}}</span>
+            </div>
+
+        </div>
+
+    </div>
+</div>

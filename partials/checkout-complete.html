@@ -1,0 +1,74 @@
+<ng-include src="'partials/checkout-navbar.html'"></ng-include>
+
+<div class="container-fluid" >
+
+    <h4>Complete your order</h4>
+
+    <div class="row-fluid">
+
+        <div class="span3"></div>
+        <div class="span6" id="checkoutForm">
+
+            <div class="row-fluid">
+
+                <div class="span6">
+
+                    <label>
+                        <span>First Name</span>
+                        <input type="text" ng-model="firstName" class="span12" />
+                    </label>
+
+                    <label>
+                        <span>Last Name</span>
+                        <input type="text" ng-model="lastName" class="span12" />
+                    </label>
+
+                    <label>
+                        <span>Email</span>
+                        <input type="email" ng-model="email" class="span12" />
+                    </label>
+
+                </div>
+
+                <div class="span6">
+
+                    <label>
+                        <span>Address 1</span>
+                        <input type="text" ng-model="address1" class="span12" />
+                    </label>
+
+                    <label>
+                        <span>Address 2</span>
+                        <input type="text" ng-model="address2" class="span12" />
+                    </label>
+
+                    <label>
+                        <span>City</span>
+                        <input type="text" ng-model="city" class="span12"/>
+                    </label>
+
+                    <label>
+                        <span>State</span>
+                        <select class="span12">
+                            <option value="" disabled selected></option>
+                            <option ng-repeat="state in states" value="{{state.code}}">{{state.name}}</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Zip</span>
+                        <input type="text" ng-model="zip" class="span12"/>
+                    </label>
+
+                <a href="#/checkout-complete" class="btn btn-success pull-right">Place your order <i class="icon-ok icon-large"></i></a>
+
+                </div>
+            </div>
+
+        <div class="span3"></div>
+
+    </div>
+
+</div>
+
+

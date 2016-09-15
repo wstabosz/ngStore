@@ -1,0 +1,25 @@
+<div style="margin-bottom: 9em;">
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+
+            <div class="container-fluid" style="padding-bottom: 1em;">
+                <h3>Order Summary</h3>
+
+                <div class="row-fluid">
+                    <div class="span3">
+                        Items in Cart: {{itemQuantityTotal()}}<br>
+                        Total: ${{itemPriceTotal()}}
+                    </div>
+                    <div class="span9">
+                        <a href="#/products" ng-show="isReviewOrder" class="btn btn-info"><i class="icon-circle-arrow-left icon-large"></i> Change Order</a>
+                        <a href="#/checkout-review" ng-hide="isReviewOrder" class="btn btn-info"><i class="icon-circle-arrow-left icon-large"></i> Review Order</a>
+                        <a href="#/checkout-complete" ng-show="isReviewOrder" class="btn btn-info">Complete Order <i class="icon-circle-arrow-right icon-large"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

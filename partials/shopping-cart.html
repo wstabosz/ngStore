@@ -1,0 +1,18 @@
+
+<div ng-controller="CartCtrl" resize-spy class="well sidebar-nav sidebar-nav-fixed" >
+    <h3 style="margin-top: 0;">Shopping Cart <i class="icon-shopping-cart icon-large"></i></h3>
+    <div ng-show="itemCount == 0">Your cart is empty.</div>
+
+    <div ng-show="itemCount > 0">
+
+    <div>
+
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+
+        <br>
+        <a href="#/checkout-review" class="btn btn-info" >Checkout</a>
+        <a ng-click="emptyCart()" class="btn btn-danger pull-right" >Empty Cart</a>
+    </div>
+
+</div>
+

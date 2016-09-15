@@ -1,0 +1,176 @@
+.review-product {
+    margin-bottom: 1em;
+}
+
+#checkoutForm {
+    padding: 1em;
+    border: 1px solid #999;
+}
+
+#checkoutForm label span {
+    display: block;
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    font-size: 9pt;
+    line-height: 1.25em;
+    height: 500px;
+}
+
+.ngViewport {
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+}
+
+.ngFooterPanel {
+    height: 30px;
+}
+
+.ngFooterPanel .ngCellText {
+    font-weight: normal;
+    background-color: #ffa;
+}
+
+.ngFooterPanel div
+{
+    display: inline-block;
+}
+
+.ngFooterPanel .column1 {
+    width: 139px;
+}
+
+.ngFooterPanel .column2 {
+    width: 32px;
+}
+
+.ngFooterPanel .column3 {
+    width: 48px;
+}
+
+.ngFooterPanel .column4 {
+    width: 54px;
+}
+
+.table {
+    margin-bottom: 0 !important;
+}
+
+.zebra0 {
+    background-color: #eee;
+}
+
+.zebra1 {
+    background-color: #fff;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cartItem li, .cartItem ul{
+    display: inline;
+    margin: 0;
+}
+
+.cartItem li {
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+.cartItem div {
+}
+
+.category {
+    border: 1px solid #555;
+    margin: 1.5em 0em;
+}
+
+.product {
+    margin-bottom: 1em;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #ddd;
+}
+
+.product img {
+    width: 100px;
+    height: 100px;
+}
+.add-to-cart {
+    margin-left: 1em;
+}
+
+.sidebar-nav-fixed-2 {
+    padding: 9px 0;
+    position:fixed;
+    left:20px;
+    top:60px;
+    width:250px;
+}
+
+.row-fluid > .span-fixed-sidebar {
+    margin-left: 290px;
+}
+
+
+.sidebar-nav-fixed {
+    position:fixed;
+    top:20px;
+    width: 21.97%;
+}
+
+.sidebar-nav-fixed-skinny {
+    width: 11.97%;
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav-fixed {
+        width:auto;
+    }
+
+}
+
+@media (max-width: 979px) {
+    .sidebar-nav-fixed {
+        margin-top: 20px;
+        position:static;
+        width: auto;
+    }
+
+}
+
+tfoot tr td {
+    font-weight: bold;
+    background-color: #ffa;
+}
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
